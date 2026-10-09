@@ -259,10 +259,3 @@ resume-mcp-project/
 | Agent hangs on start | Run `python filesystem_mcp_server.py --root ./data` to see server errors |
 
 ---
-
-## 📝 Notes and limitations
-
-- Tested with the included client only, not with third-party MCP hosts.
-- The Milestone 1 tool set is a reconstruction (list / read / info / search / parse / write); rename or extend to match your original.
-- `watch_directory` is polling-based for portability.
-- Matching is keyword and taxonomy based, not semantic.
