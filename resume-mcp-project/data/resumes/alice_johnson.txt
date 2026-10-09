@@ -1,0 +1,21 @@
+Alice Johnson
+alice.johnson@example.com | +1 415 555 0134
+
+SUMMARY
+Backend engineer with 8 years of experience building scalable services.
+
+EXPERIENCE
+Staff Engineer, DataFlow Inc (2019 - Present)
+- Designed microservices in Python and FastAPI exposing RESTful APIs
+- Tuned Postgres queries; introduced Redis caching
+- Deployed on AWS (EC2, S3, Lambda) with Docker and k8s
+- Built GitHub Actions pipelines and Terraform modules
+
+Software Engineer, CloudNine (2016 - 2019)
+- Python/Django services, MySQL, unit testing with pytest
+
+EDUCATION
+B.S. Computer Science, 2016
+
+SKILLS
+Python, Go, SQL, Docker, Kubernetes, AWS, Git, Linux

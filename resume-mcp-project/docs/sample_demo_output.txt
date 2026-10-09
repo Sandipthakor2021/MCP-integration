@@ -1,0 +1,105 @@
+
+==============================================================================
+SCENE 1: JSON-RPC 2.0 handshake and discovery (raw traffic)
+==============================================================================
+  --> [filesystem] {"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {"protocolVersion": "2024-11-05", "capabilities": {}, "clientInfo": {"name": "resume-matching-agent", "version": "1.0.0"}}}
+  <-- [filesystem] {"jsonrpc": "2.0", "id": 1, "result": {"protocolVersion": "2024-11-05", "capabilities": {"tools": {"listChanged": false}, "resources": {"subscribe": true, "listChanged": true}}, "serverInfo": {"name": "resume-filesystem-mcp", "version": "1.0.0"}, "instructions": "Resume file-system tools. Paths are 
+  --> [filesystem] {"jsonrpc": "2.0", "method": "notifications/initialized"}
+server: {'name': 'resume-filesystem-mcp', 'version': '1.0.0'} | capabilities: {"tools": {"listChanged": false}, "resources": {"subscribe": true, "listChanged": true}}
+  --> [filesystem] {"jsonrpc": "2.0", "id": 2, "method": "tools/list"}
+  <-- [filesystem] {"jsonrpc": "2.0", "id": 2, "result": {"tools": [{"name": "list_files", "description": "List resume/job files under a directory.", "inputSchema": {"type": "object", "properties": {"directory": {"type": "string"}, "recursive": {"type": "boolean"}, "pattern": {"type": "string"}}, "required": []}}, {"n
+TOOLS: list_files, read_file, get_file_info, search_files, parse_resume, write_file, batch_process, watch_directory, get_config, update_config
+
+==============================================================================
+SCENE 2: Resource discovery: resources/list, templates, read, subscribe
+==============================================================================
+  resource: config://server
+  resource: resume:///jobs/job_description.txt
+  resource: resume:///reports/ranking.md
+  resource: resume:///resumes/alice_johnson.txt
+  resource: resume:///resumes/bob_smith.txt
+  resource: resume:///resumes/carol_diaz.txt
+  resource: resume:///resumes/dan_wright.txt
+  template: resume:///{path}
+  read    : Bob Smith ...
+
+==============================================================================
+SCENE 3: Error handling: protocol errors vs tool errors vs sandbox
+==============================================================================
+  unknown method    -> JSON-RPC error -32601: Method not found: resources/frobnicate
+  missing resource  -> JSON-RPC error -32002: Resource not found
+  bad arguments     -> JSON-RPC error -32602: Missing required argument: 'path'
+  path traversal    -> tool result isError=true: Path escapes the sandbox root: ../../etc/passwd
+  missing file      -> tool result isError=true: File not found: resumes/ghost.txt
+
+==============================================================================
+SCENE 4: NEW capability: batch_process (thread pool, partial failures tolerated)
+==============================================================================
+  total=5 ok=4 failed=1 workers=4 elapsed=1.52 ms
+    ok    resumes/alice_johnson.txt      years=10
+    ok    resumes/bob_smith.txt          years=4
+    ok    resumes/carol_diaz.txt         years=1
+    ok    resumes/dan_wright.txt         years=11
+    error resumes/ghost.txt              File not found: resumes/ghost.txt
+
+==============================================================================
+SCENE 5: NEW capability: watch_directory (+ server notifications)
+==============================================================================
+  started: {'watch_id': 'watch-1', 'status': 'started', 'directory': 'resumes', 'interval_seconds': 0.2, 'tracked_files': 4}
+  ...dropped resumes/grace_lee.txt into the folder
+  server notification: notifications/resources/list_changed
+  server notification: notifications/message
+  poll: [{'event': 'created', 'path': 'resumes/grace_lee.txt', 'watch_id': 'watch-1', 'detected_at': '2026-10-09T07:20:40+00:00', 'uri': 'resume:///resumes/grace_lee.txt'}]
+
+==============================================================================
+SCENE 6: Configuration management
+==============================================================================
+  workers before: 4
+  update: {'updated': 'batch_workers', 'value': 8}
+  root_dir change rejected: 'root_dir' is not runtime-configurable (allowed: ['allowed_extensions', 'batch_workers', 'max_batch_size', 'max_file_size_mb', 'watch_interval_seconds'])
+
+==============================================================================
+SCENE 7: LangGraph agent using TWO MCP servers (filesystem + skills-db)
+==============================================================================
+  connected filesystem: tools=['list_files', 'read_file', 'get_file_info', 'search_files', 'parse_resume', 'write_file', 'batch_process', 'watch_directory', 'get_config', 'update_config']
+  connected skills: tools=['expand_skills', 'lookup_skill', 'list_categories']
+  graph path: connect -> load_job -> extract_requirements -> discover_resumes -> batch_parse -> score -> report
+
+# Candidate ranking - Senior Backend Engineer (Acme Cloud)
+
+Required: aws, docker, git, postgresql, python, rest apis  
+Preferred: ci/cd, kubernetes, microservices, redis, terraform  
+Minimum experience: 5 years
+
+| Rank | Candidate | Score | Grade | Years | Missing required |
+|---|---|---|---|---|---|
+| 1 | Alice Johnson | 100.0 | Strong | 10 | - |
+| 2 | Grace Lee | 88.0 | Strong | 7 | - |
+| 3 | Bob Smith | 63.3 | Moderate | 4 | postgresql |
+| 4 | Carol Diaz | 21.3 | Weak | 1 | aws, docker, postgresql, rest apis |
+| 5 | Dan Wright | 0.0 | Weak | 11 | aws, docker, git, postgresql, python, rest apis |
+
+  MCP calls made by the agent (agent has NO direct file access):
+    filesystem read_file       x1
+    filesystem list_files      x1
+    filesystem batch_process   x1
+    filesystem write_file      x1
+    skills     expand_skills   x7
+
+==============================================================================
+SCENE 8: Agent + watch_directory: a new resume arrives while the agent runs
+==============================================================================
+[watch] watch-1 monitoring 'resumes' for 5s ...
+[watch] new resumes: ['resumes/heidi_park.txt']
+# Candidate ranking - Senior Backend Engineer (Acme Cloud)
+
+Required: aws, docker, git, postgresql, python, rest apis  
+Preferred: ci/cd, kubernetes, microservices, redis, terraform  
+Minimum experience: 5 years
+
+| Rank | Candidate | Score | Grade | Years | Missing required |
+|---|---|---|---|---|---|
+| 1 | Heidi Park | 80.0 | Strong | 5 | - |
+
+
+Demo complete.

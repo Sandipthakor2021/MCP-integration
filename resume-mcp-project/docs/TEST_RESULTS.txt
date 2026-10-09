@@ -1,0 +1,36 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.1.1, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/claude/resume-mcp-project
+plugins: anyio-4.15.1, langsmith-0.14.5
+collecting ... collected 27 items
+
+tests/test_agent.py::TestPure::test_a1_scoring PASSED                    [  3%]
+tests/test_agent.py::TestEndToEnd::test_a2_full_workflow_multi_mcp PASSED [  7%]
+tests/test_agent.py::TestEndToEnd::test_a4_empty_directory_branch PASSED [ 11%]
+tests/test_agent.py::TestEndToEnd::test_a5_agent_does_all_io_through_mcp PASSED [ 14%]
+tests/test_agent.py::TestEndToEnd::test_a6_incremental_new_resume PASSED [ 18%]
+tests/test_agent.py::TestEndToEnd::test_a6b_watch_mode_picks_up_new_file PASSED [ 22%]
+tests/test_agent.py::TestEndToEnd::test_a7_routing_and_unknown_tool PASSED [ 25%]
+tests/test_agent.py::TestEndToEnd::test_corrupt_file_is_skipped_not_fatal PASSED [ 29%]
+tests/test_agent.py::TestSingleServer::test_a3_works_without_skills_server PASSED [ 33%]
+tests/test_agent.py::TestSkillsServer::test_a8_expand_and_lookup PASSED  [ 37%]
+tests/test_mcp_server.py::TestProtocol::test_requires_initialize PASSED  [ 40%]
+tests/test_mcp_server.py::TestProtocol::test_s1_initialize_handshake PASSED [ 44%]
+tests/test_mcp_server.py::TestProtocol::test_s2_error_codes PASSED       [ 48%]
+tests/test_mcp_server.py::TestProtocol::test_s3_notifications_get_no_response_and_ping PASSED [ 51%]
+tests/test_mcp_server.py::TestProtocol::test_s4_batch_and_id_echo PASSED [ 55%]
+tests/test_mcp_server.py::TestResources::test_s5_tools_list_exposes_all_tools PASSED [ 59%]
+tests/test_mcp_server.py::TestResources::test_s6_resource_discovery PASSED [ 62%]
+tests/test_mcp_server.py::TestResources::test_s7_resource_read_and_not_found PASSED [ 66%]
+tests/test_mcp_server.py::TestTools::test_config_file_and_env_precedence PASSED [ 70%]
+tests/test_mcp_server.py::TestTools::test_s10_tool_errors_are_isError_not_rpc_errors PASSED [ 74%]
+tests/test_mcp_server.py::TestTools::test_s11_write_file PASSED          [ 77%]
+tests/test_mcp_server.py::TestTools::test_s12_batch_process PASSED       [ 81%]
+tests/test_mcp_server.py::TestTools::test_s15_config_management PASSED   [ 85%]
+tests/test_mcp_server.py::TestTools::test_s8_milestone1_tools PASSED     [ 88%]
+tests/test_mcp_server.py::TestTools::test_s9_sandbox_prevents_traversal PASSED [ 92%]
+tests/test_mcp_server.py::TestOverStdio::test_s13_watch_directory_detects_created_modified_deleted PASSED [ 96%]
+tests/test_mcp_server.py::TestOverStdio::test_s14_protocol_errors_surface_in_client PASSED [100%]
+
+============================== 27 passed in 6.67s ==============================

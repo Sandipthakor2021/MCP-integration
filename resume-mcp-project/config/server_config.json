@@ -1,0 +1,9 @@
+{
+  "root_dir": "./data",
+  "allowed_extensions": [".txt", ".md", ".pdf", ".docx", ".json"],
+  "writable_extensions": [".txt", ".md", ".json"],
+  "max_file_size_mb": 10,
+  "batch_workers": 4,
+  "max_batch_size": 200,
+  "watch_interval_seconds": 2.0
+}

@@ -1,0 +1,16 @@
+Carol Diaz
+carol.diaz@example.com
+
+SUMMARY
+Recent graduate, 1 year of experience in data analysis.
+
+EXPERIENCE
+Data Analyst Intern, RetailCo (2024 - 2025)
+- Analysed sales with pandas and SQL
+- Built dashboards; basic Git usage
+
+EDUCATION
+M.S. Statistics, 2024
+
+SKILLS
+Python, SQL, pandas, data analysis, Git

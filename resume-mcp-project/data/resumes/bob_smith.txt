@@ -1,0 +1,18 @@
+Bob Smith
+bob.smith@example.com | 555-867-5309
+
+SUMMARY
+Full-stack developer, 4 years of experience, mostly JavaScript.
+
+EXPERIENCE
+Web Developer, ShopSpot (2021 - 2025)
+- Node.js and Express REST API for an e-commerce site
+- MongoDB data layer; some Python scripting
+- Containerized apps with Docker; deployed to AWS EC2
+- Version control with Git
+
+EDUCATION
+B.A. Information Systems, 2020
+
+SKILLS
+JavaScript, React, Node.js, MongoDB, Docker, Git, Python

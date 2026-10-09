@@ -1,0 +1,5 @@
+# Server + client + skills server use only the Python standard library.
+langgraph>=0.2        # agent state machine
+pypdf>=4.0            # optional: lets the MCP server read PDF resumes
+pytest>=8.0           # tests (unittest also works)
+matplotlib>=3.7       # optional: regenerate docs/*.png
